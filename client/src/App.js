@@ -1,8 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./components/Home"; // New home component
-import TodoApp from "./components/TodoApp"; // Wrapper for your current todo layout
+import Home from "./components/Home";
+import TodoApp from "./components/TodoApp";
 import "./App.css";
+import "./styles/global.css"; // Import the global CSS file
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -14,7 +15,6 @@ const App = () => {
     <Router>
       <Header />
       <Routes>
-        {/* Define routes for different sections */}
         <Route path="/" element={<Home />} />
         <Route path="/todo" element={<TodoApp />} />
         <Route path="/room/:roomId" element={<RoomPage />} />
