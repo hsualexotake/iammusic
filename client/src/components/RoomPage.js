@@ -22,6 +22,34 @@ const RoomPage = () => {
       setError(err.message);
     }
   };
+  const handleUpvote = async (queueId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/rooms/queue/${queueId}/upvote`,
+        {
+          method: "PUT",
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to upvote the song.");
+      }
+
+      const updatedSong = await response.json();
+
+      // Update the frontend state
+      setSongs((prevSongs) =>
+        prevSongs.map((song) =>
+          song.queue_id === queueId
+            ? { ...song, request_count: updatedSong.request_count }
+            : song
+        )
+      );
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   const addSong = async () => {
     if (!newSongName.trim()) {
@@ -100,6 +128,9 @@ const RoomPage = () => {
               <tr key={song.queue_id}>
                 <td>{song.song_name}</td>
                 <td>{song.request_count}</td>
+                <td>
+                  <button className="btn btn-secondary" onClick={() => handleUpvote(song.queue_id)}>Upvote</button>
+                </td>
               </tr>
             ))
           ) : (

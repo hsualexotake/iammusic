@@ -22,6 +22,24 @@ const getRooms = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch rooms" });
   }
 };
+const incrementRequestCount = async (req, res) => {
+  const { queueId } = req.params;
+
+  try {
+    const result = await pool.query(
+      "UPDATE queue SET request_count = request_count + 1 WHERE queue_id = $1 RETURNING *",
+      [queueId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Queue item not found." });
+    }
+
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to increment request count." });
+  }
+};
 
 // Get a specific room by ID
 const getRoomById = async (req, res) => {
@@ -95,4 +113,5 @@ module.exports = {
   getRoomById,
   getRoomQueue,
   addSongToQueue,
+  incrementRequestCount
 };
