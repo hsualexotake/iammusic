@@ -5,7 +5,7 @@ const {
   getRoomById,
   getRoomQueue,
   addSongToQueue,
-  incrementRequestCount
+  incrementRequestCount,
 } = require("../controllers/roomsController");
 const router = express.Router();
 
@@ -24,6 +24,6 @@ router.get("/:roomId/queue", getRoomQueue);
 // Add a song to the queue for a specific room
 router.post("/:roomId/queue", addSongToQueue);
 
-router.put("/queue/:queueId/upvote", incrementRequestCount);
+router.put("/:roomId/queue/:queueId/upvote", incrementRequestCount);
 
 module.exports = router;

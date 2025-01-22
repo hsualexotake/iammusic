@@ -79,49 +79,49 @@ const QueuePage = () => {
   }, [roomId]);
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-center">Room ID: {roomId}</h2>
+    <div className="container mx-auto mt-12">
+      <h2 className="text-center text-2xl font-bold">Room ID: {roomId}</h2>
 
-      {error && <p className="text-danger text-center">{error}</p>}
+      {error && <p className="text-red-500 text-center mt-4">{error}</p>}
       {successMessage && (
-        <p className="text-success text-center">{successMessage}</p>
+        <p className="text-green-500 text-center mt-4">{successMessage}</p>
       )}
 
       {/* Add Song Form */}
-      <div className="d-flex justify-content-center mt-4">
+      <div className="flex justify-center mt-6">
         <input
           type="text"
-          className="form-control w-50"
+          className="form-input w-1/2 mr-2"
           placeholder="Enter song name"
           value={newSongName}
           onChange={(e) => setNewSongName(e.target.value)}
         />
-        <button className="btn btn-primary ml-3" onClick={addSong}>
+        <button className="btn btn-primary" onClick={addSong}>
           Add Song
         </button>
       </div>
 
       {/* Queue Table */}
-      <table className="table table-striped mt-3">
+      <table className="table-auto w-full mt-6">
         <thead>
           <tr>
-            <th>Song</th>
-            <th>Artist - mapped to roomId for now</th>
-            <th>Requests</th>
+            <th className="px-4 py-2">Song</th>
+            <th className="px-4 py-2">Artist - mapped to roomId for now</th>
+            <th className="px-4 py-2">Requests</th>
           </tr>
         </thead>
         <tbody>
           {songs.length > 0 ? (
             songs.map((song) => (
-              <tr key={song.queue_id}>
-                <td>{song.song_name}</td>
-                <td>{song.room_id}</td>
-                <td>{song.request_count}</td>
+              <tr key={song.queue_id} className="bg-gray-100">
+                <td className="border px-4 py-2">{song.song_name}</td>
+                <td className="border px-4 py-2">{song.room_id}</td>
+                <td className="border px-4 py-2">{song.request_count}</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="3" className="text-center">
+              <td colSpan="3" className="text-center py-4">
                 No songs in the queue.
               </td>
             </tr>

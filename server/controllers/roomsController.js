@@ -23,21 +23,22 @@ const getRooms = async (req, res) => {
   }
 };
 const incrementRequestCount = async (req, res) => {
-  const { queueId } = req.params;
+  const { roomId, queueId } = req.params;
 
   try {
     const result = await pool.query(
-      "UPDATE queue SET request_count = request_count + 1 WHERE queue_id = $1 RETURNING *",
-      [queueId]
+      "UPDATE queue SET request_count = request_count + 1 WHERE room_id = $1 AND queue_id = $2 RETURNING *",
+      [roomId, queueId]
     );
 
-    if (result.rowCount === 0) {
-      return res.status(404).json({ error: "Queue item not found." });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Song not found in the queue" });
     }
 
     res.status(200).json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ error: "Failed to increment request count." });
+    console.error(err.message);
+    res.status(500).json({ error: "Failed to upvote song" });
   }
 };
 
@@ -113,5 +114,5 @@ module.exports = {
   getRoomById,
   getRoomQueue,
   addSongToQueue,
-  incrementRequestCount
+  incrementRequestCount,
 };
