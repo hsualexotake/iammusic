@@ -24,7 +24,7 @@ const Header = () => {
       initial="hidden"
       animate="visible"
     >
-      <div className="container d-flex justify-content-between align-items-center">
+      <div className="shadow container d-flex justify-content-between align-items-center rounded-none border border-white border-opacity-40 shadow-black/[0.03] backdrop-blur-[0.5rem] top-6 h-[3.25rem] w-[36rem] sm:rounded-full">
         {/* Logo */}
         <motion.div className="logo" variants={linkVariants} custom={5}>
           <Link to="/" className="text-decoration-none text-dark h4">

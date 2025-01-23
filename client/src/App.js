@@ -13,7 +13,6 @@ import RoomPage from "./components/RoomPage";
 const App = () => {
   return (
     <Router>
-      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/todo" element={<TodoApp />} />
