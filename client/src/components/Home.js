@@ -49,7 +49,7 @@ const Home = () => {
       <div className="opacity-30 absolute top-[65%] left-[80%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] bg-purple-800"></div>
 
       <header className="relative text-center mb-10 z-10">
-        <h1 className="text-8xl font-extrabold mb-4 text-white">Kyu</h1>
+        <h1 className="text-8xl font-extrabold mb-4 text-white">Name</h1>
         <p className="container text-xl font-light mb-6">
           Bridging Apple Music and Spotify
         </p>
