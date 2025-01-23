@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import QueueInput from "./QueueApp/QueueInput";
 import QueueList from "./QueueApp/QueueList";
 
-
 const RoomPage = () => {
   const { roomId } = useParams();
   const [songs, setSongs] = useState([]);
@@ -12,7 +11,9 @@ const RoomPage = () => {
 
   const fetchQueue = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/rooms/${roomId}/queue`);
+      const response = await fetch(
+        `http://localhost:8080/rooms/${roomId}/queue`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch the queue.");
       }
@@ -23,7 +24,6 @@ const RoomPage = () => {
       setSongs([]); // Ensure `songs` is always an array
     }
   };
-  
 
   useEffect(() => {
     fetchQueue();
@@ -31,11 +31,14 @@ const RoomPage = () => {
 
   const handleAddSong = async (songName) => {
     try {
-      const response = await fetch(`http://localhost:8080/rooms/${roomId}/queue`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ song_name: songName }),
-      });
+      const response = await fetch(
+        `http://localhost:8080/rooms/${roomId}/queue`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ song_name: songName }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to add song.");
@@ -53,9 +56,12 @@ const RoomPage = () => {
 
   const handleUpvote = async (queueId) => {
     try {
-      const response = await fetch(`http://localhost:8080/rooms/${roomId}/queue/${queueId}/upvote`, {
-        method: "PUT",
-      });
+      const response = await fetch(
+        `http://localhost:8080/rooms/${roomId}/queue/${queueId}/upvote`,
+        {
+          method: "PUT",
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to upvote song.");
@@ -77,7 +83,9 @@ const RoomPage = () => {
   return (
     <div className="container mt-5">
       <h2 className="text-center">Room {roomId}</h2>
-      {successMessage && <p className="text-success text-center">{successMessage}</p>}
+      {successMessage && (
+        <p className="text-success text-center">{successMessage}</p>
+      )}
       {error && <p className="text-danger text-center">{error}</p>}
       <QueueInput onAddSong={handleAddSong} />
       <QueueList songs={songs} onUpvote={handleUpvote} />
