@@ -6,6 +6,7 @@ import QueueList from "./QueueApp/QueueList";
 const RoomPage = () => {
   const { roomId } = useParams();
   const [songs, setSongs] = useState([]);
+  const [highlightedSongId, setHighlightedSongId] = useState(null); // Highlighted song
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [isBlurGreen, setIsBlurGreen] = useState(false); // State for blur color
@@ -80,7 +81,45 @@ const RoomPage = () => {
             : song
         )
       );
+
+      // Highlight the updated song
+      setHighlightedSongId(queueId);
+      setTimeout(() => setHighlightedSongId(null), 1000); // Remove highlight after 1s
     } catch (err) {
+      setError(err.message);
+      setTimeout(() => setError(null), 3000);
+    }
+  };
+
+  const handleDownvote = async (queueId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/queue/${queueId}/decrement`, // Adjusted URL
+        {
+          method: "PUT",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to downvote song.");
+      }
+
+      const updatedSong = await response.json();
+
+      // Update the state to reflect the new request count
+      setSongs((prevSongs) =>
+        prevSongs.map((song) =>
+          song.queue_id === queueId
+            ? { ...song, request_count: Math.max(0, song.request_count - 1) }
+            : song
+        )
+      );
+
+      // Highlight the updated song
+      setHighlightedSongId(queueId);
+      setTimeout(() => setHighlightedSongId(null), 1000); // Remove highlight after 1s
+    } catch (err) {
+      console.error(err.message);
       setError(err.message);
       setTimeout(() => setError(null), 3000);
     }
@@ -90,17 +129,17 @@ const RoomPage = () => {
     <div className="relative min-h-screen bg-gradient-to-br from-slate-950 to-slate-950 text-white flex flex-col items-center justify-center px-4">
       {/* Dynamic Background Blurs */}
       <div
-        className={`opacity-30 absolute top-[10%] left-[23%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] transition-colors duration-500 ${
-          isBlurGreen ? "bg-green-500" : "bg-red-400"
+        className={`opacity-30 absolute top-[10%] left-[23%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] transition-colors duration-[2s] ${
+          isBlurGreen ? "bg-lime-700" : "bg-fuchsia-400"
         }`}
       ></div>
       <div
-        className={`opacity-30 absolute top-[10%] left-[50%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[23rem] w-[40rem] rounded-full blur-[10rem] transition-colors duration-500 ${
-          isBlurGreen ? "bg-green-500" : "bg-indigo-400"
+        className={`opacity-30 absolute top-[10%] left-[50%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[40rem] rounded-full blur-[10rem] transition-colors duration-[2s] ${
+          isBlurGreen ? "bg-lime-300" : "bg-fuchsia-300"
         }`}
       ></div>
       <div
-        className={`opacity-30 absolute top-[10%] left-[78%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] transition-colors duration-500 ${
+        className={`opacity-30 absolute top-[10%] left-[78%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] transition-colors duration-[2s] ${
           isBlurGreen ? "bg-green-500" : "bg-purple-400"
         }`}
       ></div>
@@ -128,7 +167,12 @@ const RoomPage = () => {
 
         {/* Input and List Components */}
         <QueueInput onAddSong={handleAddSong} />
-        <QueueList songs={songs} onUpvote={handleUpvote} />
+        <QueueList
+          songs={songs}
+          onUpvote={handleUpvote}
+          onDownvote={handleDownvote}
+          highlightedSongId={highlightedSongId} // Pass the highlighted ID
+        />
       </div>
     </div>
   );

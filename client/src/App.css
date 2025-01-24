@@ -39,3 +39,28 @@
 }
 
 
+.song-row {
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.song-row-enter {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+
+.song-row-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 0.3s ease-in-out;
+}
+
+.song-row-leave {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.song-row-leave-active {
+  transform: translateY(10px);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
