@@ -11,15 +11,18 @@ const QueueInput = ({ onAddSong }) => {
   };
 
   return (
-    <div className="mb-3">
+    <div className="flex items-center justify-center gap-4 mb-10">
       <input
         type="text"
         placeholder="Enter song name"
         value={songName}
         onChange={(e) => setSongName(e.target.value)}
-        className="form-control"
+        className="w-full max-w-md bg-slate-800 text-white text-lg py-3 px-6 rounded-full border border-slate-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
       />
-      <button className="btn btn-primary mt-2" onClick={handleAddSong}>
+      <button
+        onClick={handleAddSong}
+        className="bg-indigo-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-indigo-600 transition-all"
+      >
         Add Song
       </button>
     </div>
