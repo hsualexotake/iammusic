@@ -53,4 +53,24 @@ const incrementRequestCount = async (req, res) => {
   }
 };
 
-module.exports = { getQueueByRoomId, addSong, incrementRequestCount };
+// Decrement request count for a specific song
+const decrementRequestCount = async (req, res) => {
+  const { queueId } = req.params;
+  try {
+    const result = await pool.query(
+      "UPDATE queue SET request_count = GREATEST(request_count - 1, 0) WHERE queue_id = $1 RETURNING *",
+      [queueId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Song not found" });
+    }
+
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to decrement request count" });
+  }
+};
+
+
+module.exports = { getQueueByRoomId, addSong, incrementRequestCount, decrementRequestCount };
