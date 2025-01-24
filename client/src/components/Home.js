@@ -40,13 +40,15 @@ const Home = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-black to-black text-white flex flex-col items-center justify-center px-4">
+    <div className="relative min-h-screen bg-gradient-to-br from-stone-950 to-stone-950 text-white flex flex-col items-center justify-center px-4">
       {/* Background Blur */}
       <div className="opacity-30 absolute top-[35%] left-[30%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] bg-indigo-300"></div>
       <div className="opacity-30 absolute top-[30%] left-[50%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[15rem] w-[25rem] rounded-full blur-[10rem] bg-blue-600"></div>
       <div className="opacity-30 absolute top-[20%] left-[55%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] bg-violet-500"></div>
       <div className="opacity-30 absolute top-[30%] left-[65%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] bg-rose-900"></div>
-      <div className="opacity-30 absolute top-[65%] left-[80%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] bg-purple-800"></div>
+      <div className="opacity-30 absolute top-[45%] left-[72%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] bg-[#30ac51]"></div>
+      <div className="opacity-30 absolute top-[78%] left-[70%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] bg-[#82164e]"></div>
+      <div className="opacity-30 absolute top-[60%] left-[50%] -translate-x-1/2 -translate-y-1/2 -z-8 h-[20rem] w-[35rem] rounded-full blur-[10rem] bg-[#a92278]"></div>
 
       <header className="relative text-center mb-10 z-10">
         <h1 className="text-8xl font-extrabold mb-4 text-white">Name</h1>
